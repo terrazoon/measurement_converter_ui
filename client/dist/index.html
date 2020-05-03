@@ -1,0 +1,148 @@
+<html>
+<head>
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+body {font-family: Arial;}
+
+.tab {
+  overflow: hidden;
+  border: 1px solid #ccc;
+  background-color: #f1f1f1;
+}
+
+.tab button {
+  background-color: inherit;
+  float: left;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding: 14px 16px;
+  transition: 0.3s;
+  font-size: 17px;
+}
+
+.tab button:hover {
+  background-color: #ddd;
+}
+
+.tab button.active {
+  background-color: #ccc;
+}
+
+.tabcontent {
+  display: none;
+  padding: 6px 12px;
+  border: 1px solid #ccc;
+  border-top: none;
+}
+</style>
+
+    <script>
+
+        function openConverter(evt, converterName) {
+            var i, tabcontent, tablinks;
+            tabcontent = document.getElementsByClassName("tabcontent");
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].style.display = "none";
+            }
+            tablinks = document.getElementsByClassName("tablinks");
+            for (i = 0; i < tablinks.length; i++) {
+                tablinks[i].className = tablinks[i].className.replace(" active", "");
+            }
+            document.getElementById(converterName).style.display = "block";
+            evt.currentTarget.className += " active";
+        }
+
+        async function getTemperature() {
+            my_input = document.getElementById("orig-temperature").value;
+            if (my_input == "") {
+                alert("Need to input original temperature");
+                return;
+            }
+            student_answer = document.getElementById("student-temperature").value;
+            if (student_answer == "") {
+                alert("Need to input student's answer");
+                return;
+            }
+            from_unit = document.getElementById("from-temperature").value;
+            if (from_unit == "") {
+                alert("Need to input from units");
+                return;
+            }
+            to_unit = document.getElementById("to-temperature").value;
+            if (to_unit == "") {
+                alert("Need to input to units");
+                return;
+            }
+            let response = await fetch('https://www.kennethkehl.com/api/temperature/' + my_input + '/' + student_answer + '/' + from_unit + '/' + to_unit);
+            let data = await response.json()
+            alert(data);
+        }
+
+        async function getVolume() {
+            my_input = document.getElementById("orig-volume").value;
+            if (my_input == "") {
+                alert("Need to input original volume");
+                return;
+            }
+            student_answer = document.getElementById("student-volume").value;
+            if (student_answer == "") {
+                alert("Need to input student's answer");
+                return;
+            }
+            from_unit = document.getElementById("from-volume").value;
+            if (from_unit == "") {
+                alert("Need to input from units");
+                return;
+            }
+            to_unit = document.getElementById("to-volume").value;
+            if (to_unit == "") {
+                alert("Need to input to units");
+                return;
+            }
+            let response = await fetch('https://www.kennethkehl.com/api/volume/' + my_input + '/' + student_answer + '/' + from_unit + '/' + to_unit);
+            let data = await response.json()
+            alert(data);
+        }
+    </script>
+</head>
+<body>
+<h2>Teacher Temperature and Volume Conversion Tool Version 0.1</h2>
+<br/>
+<br/>
+
+<div class="tab">
+  <button class="tablinks" onclick="openConverter(event, 'Temperature')">Temperature</button>
+  <button class="tablinks" onclick="openConverter(event, 'Volume')">Volume</button>
+</div>
+
+<div id="Temperature" class="tabcontent">
+<form id="temperature-form"  method="post">
+      <h4>Original Temperature:</h4>
+      <input type="text" style="height:35px;" id="orig-temperature" placeholder="Enter input here" class="form-control" style="width:100%;" />
+      <h4>Student's Answer:</h4>
+      <input type="text" style="height:35px;" id="student-temperature" placeholder="Enter student's answer" class="form-control" style="width:100%;"/>
+      <h4>From Units:</h4><h6> (F = Fahrenheit, C = Celsius, K = Kelvin, R = Rankine)</h6>
+      <input type="text" style="height:35px;" id="from-temperature" placeholder="Enter from units here" class="form-control" style="width:100%;"/>
+      <h4>To Units:</h4><h6> (F = Fahrenheit, C = Celsius, K = Kelvin, R = Rankine)</h6>
+      <input type="text" style="height:35px;" id="to-temperature" placeholder="Enter to units here" class="form-control" style="width:100%;"/>
+      <br/>
+      <button type="button" onClick="getTemperature();" class="btn btn-lg" style="margin-top:20px;">Submit</button>
+</form>
+</div>
+<div id="Volume" class="tabcontent">
+<form id="volume-form" method="post">
+      <h4>Original Volume:</h4>
+      <input type="text" style="height:35px;" id="orig-volume" placeholder="Enter input here" class="form-control" style="width:100%;" />
+      <h4>Student's Answer:</h4>
+      <input type="text" style="height:35px;" id="student-volume" placeholder="Enter student's answer" class="form-control" style="width:100%;"/>
+      <h4>From Units:</h4><h6> (G = Gallons, C = Cups, T = Tablespoons, L = Liters, F = Cubic-Feet, I = Cubic-Inches)</h6>
+      <input type="text" style="height:35px;" id="from-volume" placeholder="Enter from units here" class="form-control" style="width:100%;"/>
+      <h4>To Units:</h4><h6> (G = Gallons, C = Cups, T = Tablespoons, L = Liters, I = Cubic-Feet, F = Cubic-Inches)</h6>
+      <input type="text" style="height:35px;" id="to-volume" placeholder="Enter to units here" class="form-control" style="width:100%;"/>
+      <br/>
+      <button type="button" onClick="getVolume();" class="btn btn-lg" style="margin-top:20px;">Submit</button>
+</form>
+</div>
+</body>
+</html>
