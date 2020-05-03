@@ -1,0 +1,14 @@
+{
+  "name": "measurement-converter-ui",
+  "version": "1.0.0",
+  "description": "a simple ui to support measurement-converter",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Kenneth Kehl",
+  "license": "ISC",
+  "dependencies": {
+    "serverless-finch": "^2.5.2"
+  }
+}

@@ -1,0 +1,22 @@
+service: measurement-converter-ui
+
+frameworkVersion: '>=1.55.0 <2.0.0'
+
+plugins:
+  - serverless-finch
+
+custom:
+  bucketName: teacher-converter-tool
+  client:
+    bucketName: ${self:custom.bucketName}
+
+provider:
+  name: aws
+  timeout: 30
+  memorySize: 512
+  runtime: python3.8
+  stage: dev
+  region: us-east-1
+  environment:
+
+
